@@ -16,13 +16,6 @@ The Task Management API is a RESTful service that allows users to create, read, 
 
 The complete code is available at: https://github.com/Kyu-Yi/task-management-api.git
 
-## Prerequisites
-
-- Docker Desktop installed
-- Git installed
-- Web browser for accessing Jenkins UI
-- 8GB RAM recommended
-- 10GB free disk space
 
 ## Setup Instructions
 
@@ -92,7 +85,7 @@ docker run -d -p 8080:8080 -p 50000:50000 --name jenkins -v jenkins_home:/var/je
 
 #### Access Jenkins UI
 
-1. Open a web browser and navigate to http://localhost:8080
+1. Open a web browser and go to http://localhost:8080
 2. Retrieve the initial admin password:
    ```bash
    docker exec jenkins cat /var/jenkins_home/secrets/initialAdminPassword
