@@ -10,23 +10,34 @@ pipeline {
 
         stage('Setup Python Environment') {
             steps {
-                sh 'apt-get update && apt-get install -y python3-venv'
-                sh 'python3 -m venv venv'
-                sh 'venv/bin/pip install --upgrade pip'
-                sh 'venv/bin/pip install -r requirements.txt'
+                // Create a virtual environment without system packages
+                sh 'python3 -m venv venv || python -m venv venv'
+                
+                // Install packages in the virtual environment
+                sh '''
+                    . venv/bin/activate
+                    pip install --upgrade pip
+                    pip install -r requirements.txt
+                '''
             }
         }
 
         stage('Test') {
             steps {
-                sh 'venv/bin/python -m pytest tests/ --cov=src/ || true'
+                sh '''
+                    . venv/bin/activate
+                    python -m pytest tests/ --cov=src/ || true
+                '''
             }
         }
 
         stage('Code Quality') {
             steps {
-                sh 'venv/bin/pip install pylint || true'
-                sh 'venv/bin/pylint src/ || true'  // Continue even if pylint finds issues
+                sh '''
+                    . venv/bin/activate
+                    pip install pylint || true
+                    pylint src/ || true
+                '''
             }
         }
 
