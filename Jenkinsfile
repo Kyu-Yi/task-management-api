@@ -8,22 +8,25 @@ pipeline {
             }
         }
 
-        stage('Setup') {
+        stage('Setup Python Environment') {
             steps {
-                sh 'pip install -r requirements.txt'
+                sh 'apt-get update && apt-get install -y python3-venv'
+                sh 'python3 -m venv venv'
+                sh 'venv/bin/pip install --upgrade pip'
+                sh 'venv/bin/pip install -r requirements.txt'
             }
         }
 
         stage('Test') {
             steps {
-                sh 'python -m pytest tests/ --cov=src/ || true'
+                sh 'venv/bin/python -m pytest tests/ --cov=src/ || true'
             }
         }
 
         stage('Code Quality') {
             steps {
-                sh 'pip install pylint || true'
-                sh 'pylint src/ || true'  // Continue even if pylint finds issues
+                sh 'venv/bin/pip install pylint || true'
+                sh 'venv/bin/pylint src/ || true'  // Continue even if pylint finds issues
             }
         }
 
