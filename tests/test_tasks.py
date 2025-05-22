@@ -54,10 +54,10 @@ def test_delete_task(client):
     # First create a task
     response = client.post(
         '/tasks',
-        data=json.dumps({'title': 'Task to Delete'}),
+        data=json.dumps({
         content_type='application/json'
     )
-    task_id = json.loads(response.data)['id']
+    task_id = json.loads(response.data)['cd']
 
     # Now delete it
     response = client.delete(f'/tasks/{task_id}')
