@@ -11,22 +11,17 @@ pipeline {
 
         stage('Setup and Test') {
             steps {
-                echo 'Setting up Python environment and running tests...'
-                echo 'Command that would run: python -m pip install -r requirements.txt'
-                echo 'Command that would run: python -m pytest tests/ --cov=src/'
-                sh 'ls -la'  // This will show the project files
-                sh 'cat requirements.txt'  // Display the requirements
-                sh 'cat src/app.py'  // Display the main app file
-                sh 'cat tests/test_tasks.py'  // Display test file
+                echo 'Installing dependencies and running tests...'
+                sh 'python3 -m pip install -r requirements.txt'
+                sh 'pytest tests/'
             }
         }
 
         stage('Code Quality') {
             steps {
                 echo 'Running code quality checks...'
-                echo 'Command that would run: pip install pylint'
-                echo 'Command that would run: pylint src/'
-                sh 'ls -la src/'  // List source code files
+                sh 'pip install pylint'
+                sh 'pylint src/ || true' // Allow it to fail without stopping the pipeline
             }
         }
 
@@ -56,8 +51,8 @@ pipeline {
         }
         success {
             echo 'Pipeline completed successfully'
-            echo 'The CI/CD pipeline has been successfully simulated and executed where possible.'
-            echo 'In a production environment, the pipeline would include actual Python package installation, testing, and Docker deployment.'
+            echo 'The CI/CD pipeline has been successfully simulated and executed where necessary.'
+            echo 'In a production environment, the pipeline would include actual Docker build and deployment steps.'
         }
     }
 }
