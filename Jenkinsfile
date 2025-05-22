@@ -12,8 +12,13 @@ pipeline {
         stage('Setup and Test') {
             steps {
                 echo 'Installing dependencies and running tests...'
-                sh 'python3 -m pip install -r requirements.txt'
-                sh 'pytest tests/'
+                sh '''
+                    python3 -m venv venv
+                    . venv/bin/activate
+                    pip install --upgrade pip
+                    pip install -r requirements.txt
+                    pytest tests/
+                '''
             }
         }
 
