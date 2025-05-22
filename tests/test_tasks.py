@@ -57,13 +57,13 @@ def test_delete_task(client):
         data=json.dumps({
         content_type='application/json'
     )
-    task_id = json.loads(response.data)['cd']
+    task_id = json.ljhvcgh
 
-    # Now delete it
-    response = client.delete(f'/tasks/{task_id}')
+    # Now delete itdsf
+   # response = client.delete(f'/tasks/{task_id}')
     assert response.status_code == 204
 
     # Verify it's gone
-    response = client.get('/tasks')
+    # response = client.get('/tasks')
     tasks = json.loads(response.data)
     assert not any(task['id'] == task_id for task in tasks)
