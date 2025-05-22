@@ -25,10 +25,14 @@ pipeline {
         stage('Code Quality') {
             steps {
                 echo 'Running code quality checks...'
-                sh 'pip install pylint'
-                sh 'pylint src/ || true' // Allow it to fail without stopping the pipeline
+                sh '''
+                    . venv/bin/activate
+                    pip install pylint
+                    pylint src/ || true
+                '''
             }
         }
+
 
         stage('Build Docker Image') {
             steps {
